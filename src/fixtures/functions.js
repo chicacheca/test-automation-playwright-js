@@ -59,6 +59,32 @@ export function applicationsSearchFieldLocator(page) {
     return page.locator("input[type='search']");
 }
 
+// Registration Page Locators:
+
+export function nameFieldLocator(page) {
+    return page.locator("#name");
+}
+
+export function registrationEmailFieldLocator(page) {
+    return page.locator("#email");
+}
+
+export function registrationPasswordFieldLocator(page) {
+    return page.locator("#password");
+}
+
+export function confirmPasswordFieldLocator(page) {
+    return page.locator("#password-confirm");
+}
+
+export function submitButtonLocator(page) {
+    return page.locator(".btn-primary");
+}
+
+export function loadingIndicatorLocator(page) {
+    return page.getByText('Provádím...');
+}
+
 // Actions:
 
 export async function openLoginPage(page) {
@@ -86,4 +112,9 @@ export async function searchInTable(page, applicationsSearchText) {
 export async function waitForTableLoad(page) {
     await applicationsLoadingIndicatorLocator(page).waitFor({state: "visible"});
     await applicationsLoadingIndicatorLocator(page).waitFor({state: "hidden"});
+}
+
+export function generateRandomEmail() {
+    const timestamp = new Date().toISOString().replace(/[-:.TZ]/g, ""); // YYYYMMDDHHMMSSmmm
+    return `randomuser${timestamp}@gmail.com`;
 }
