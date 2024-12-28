@@ -39,7 +39,30 @@ npx playwright test
 npx playwright show-report
 ```
 
-**Update playwright:**
+## Running examples
+
+**Examples (lesson 1 - 11):**
+```
+npx playwright test --config=playwright.examples.config.js --ui 
+```
+
+**Cucumber examples (lesson 12):**
+```
+npx playwright test --config=playwright.cucumber.config.js --ui
+```
+
+**Cucumber BDD generator:**
+```
+npx bddgen --config=playwright.cucumber.config.js
+```
+
+## Update playwright
 ```
 npx playwright install 
+```
+
+# Docker
+You can run tests in Docker. There is a dedicated cofing file for Docker: `playwright.docker.config.js`.
+```
+docker-compose up --build
 ```

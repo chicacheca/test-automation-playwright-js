@@ -10,25 +10,22 @@ import {
     ApplicationTexts
 } from '../../fixtures/fixtures.js'
 import {RegExp} from "../../fixtures/regular-expressions";
-import {LoginPage} from "./pages/login.page";
-import {ApplicationsPage} from "./pages/applications.page";
+import {ApplicationPages} from "./pages";
 
 test.describe('Applications Page', async () => {
+    let app;
 
     test.beforeEach(async ({page}) => {
-        const loginPage = new LoginPage(page);
-        const applicationsPage = new ApplicationsPage(page);
+        app = new ApplicationPages(page);
 
-        await loginPage.open();
-        await loginPage.login(username, password);
-        await applicationsPage.goToApplicationsPage();
+        await app.loginPage.open();
+        await app.loginPage.login(username, password);
+        await app.applicationsPage.goToApplicationsPage();
         await test.expect(page).toHaveTitle(ApplicationTexts.applicationsPage.title);
     });
 
     test('should list all applications', async ({ page }) => {
-        const applicationsPage = new ApplicationsPage(page);
-
-        const allRows = await applicationsPage.getApplicationsTableRows(page);
+        const allRows = await app.applicationsPage.getApplicationsTableRows(page);
         await expect(allRows.length, 'table should have >= ' + applicationsPageSize + ' rows')
             .toBeGreaterThanOrEqual(applicationsPageSize);
 
@@ -42,16 +39,14 @@ test.describe('Applications Page', async () => {
     });
 
     test('should filter in applications', async ({ page }) => {
-        const applicationsPage = new ApplicationsPage(page);
-
-        const allRows = await applicationsPage.getApplicationsTableRows();
+        const allRows = await app.applicationsPage.getApplicationsTableRows();
         await expect(allRows.length, 'table should have >= ' + applicationsPageSize + ' rows')
             .toBeGreaterThanOrEqual(applicationsPageSize);
 
-        await applicationsPage.searchInApplicationsTable(applicationsSearchText);
-        await applicationsPage.waitForTableToLoad();
+        await app.applicationsPage.searchInApplicationsTable(applicationsSearchText);
+        await app.applicationsPage.waitForTableToLoad();
 
-        const filteredRows = await applicationsPage.getApplicationsTableRows();
+        const filteredRows = await app.applicationsPage.getApplicationsTableRows();
         await expect(filteredRows.length, 'table should have < ' + allRows.length + ' rows')
             .toBeLessThan(allRows.length);
 
@@ -61,19 +56,28 @@ test.describe('Applications Page', async () => {
         }
     });
 
-    // it('should open application detail', async () => {
-    //
-    //     // vybere třetí přihlášku v tabulce (musí tam samozřejmě být alespoň 3)
-    //     const thirdRow = (await ApplicationsPage.getTableRows())[2];
-    //     const [lastName, firstName, secondName] = (await thirdRow.getValues()).name.split(' ');
-    //
-    //     // otevře detail přihlášky
-    //     const applicationDetailPage = await thirdRow.getInfo();
-    //
-    //     // získá obsah detailu přihlášky
-    //     const applicationDetail = await applicationDetailPage.getDetail();
-    //
-    //     await expect(applicationDetail).toContainEqual(['Křestní jméno žáka:', [firstName, secondName].join(' ')]);
-    //     await expect(applicationDetail).toContainEqual(['Příjmení žáka:', lastName]);
-    // });
+    test("should open application detail", async ({ page }) => {
+
+        // selects the third application in the table (there must be at least 3)
+        const thirdRow = (await app.applicationsPage.getApplicationsTableRows())[2];
+
+        const thirdRowValues = await thirdRow.getValues();
+        await expect(thirdRowValues.name).toMatch(RegExp.NAME);
+        await expect(thirdRowValues.date).toMatch(RegExp.DATE);
+        await expect(thirdRowValues.paymentType).toMatch(RegExp.PAYMENT_TYPE);
+        await expect(thirdRowValues.toPay).toMatch(RegExp.TO_PAY);
+
+        // opens the detail of the application
+        const applicationDetailPage = await thirdRow.openInfo();
+        await expect(page).toHaveScreenshot("application-detail.png");
+
+        // Advanced: assert the content of the application detail
+        const applicationDetail = await applicationDetailPage.getDetail();
+        await expect(applicationDetail[3][1]).toEqual([thirdRowValues.name.split(" ")[1]]);
+        await expect(applicationDetail[4][1]).toEqual([thirdRowValues.name.split(" ")[0]]);
+        await expect(applicationDetail[1][1]).toContain(
+            thirdRowValues.paymentType,
+            "Zbývá uhradit: " + thirdRowValues.toPay
+        );
+    });
 });

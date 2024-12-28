@@ -1,0 +1,42 @@
+name: Playwright Tests and Deploy Report to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  test-and-deploy-report:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.49.1-noble
+      options: --user 1001
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment: github-pages
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: Install dependencies
+        run: npm ci
+      - name: Run Playwright tests
+        run: npx playwright test --config=playwright.ci.config.js --grep @ci
+        env:
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+        continue-on-error: true
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        if: always()
+        with:
+          path: playwright-report
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
+        if: always()

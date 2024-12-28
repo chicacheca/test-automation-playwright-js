@@ -1,4 +1,4 @@
-import {sanitizeText} from "../../../fixtures/helpers";
+import { sanitizeText } from "../../../fixtures/helpers";
 
 /**
  * Page object describing the applications page
@@ -60,8 +60,8 @@ export class TableRow {
 
 }
 
-/*
-Advanced page object for the application detail page
+/**
+ * Advanced page object for the application detail page
  */
 export class ApplicationInfoPage {
 

@@ -5,13 +5,17 @@ async function guessNumber(number) {
     return number === secretNumber;
 }
 
+(async () => {
 
-console.log("Guessing number" );
+    console.log("Guessing number" );
 
-const isCorrect = await guessNumber(42);
+    const isCorrect = await guessNumber(41);
 
-if (isCorrect) {
-    console.log("I guessed correctly :)");
-} else {
-    console.log("I missed :(")
-}
+    if (isCorrect) {
+        console.log("I guessed correctly :)");
+    } else {
+        console.log("I missed :(")
+    }
+
+})();
+

@@ -1,0 +1,14 @@
+version: '3.9'
+
+services:
+  playwright:
+    image: playwright-tests # The Docker image name
+    build:
+      context: . # Path to your Dockerfile
+      dockerfile: Dockerfile
+    working_dir: /usr/src/app
+    volumes:
+      - .:/usr/src/app # Mount the current directory into the container
+      - ./playwright-report:/usr/src/app/playwright-report # Map the test report directory
+    network_mode: "host" # Allows access to localhost for any server dependencies
+    command: ["npx", "playwright", "test", "--config=playwright.docker.config.js"]

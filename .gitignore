@@ -24,5 +24,8 @@ node_modules/
 .vscode
 
 ### Other
+**/.DS_Store
 **/*.png
 .env
+
+/state/

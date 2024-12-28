@@ -39,7 +39,7 @@ test.describe("Objednávka pro MŠ/ZŠ", async () => {
       await page.keyboard.press("Enter");
       await page.locator(".toast-message").waitFor();
 
-      // TODO until ARES ('Data z ARESu se nepodařilo načíst, vyplňte je prosím ručně')
+      // TODO until ARES ("Data z ARESu se nepodařilo načíst, vyplňte je prosím ručně")
       await fillNameAndAddress(page);
 
       await expect(page.locator("#client")).toHaveValue(clientName);
@@ -52,7 +52,7 @@ test.describe("Objednávka pro MŠ/ZŠ", async () => {
       await page.locator("#ico").fill(ICO);
       await page.keyboard.press("Enter");
       await page.locator(".toast-message").waitFor();
-      // TODO until ARES ('Data z ARESu se nepodařilo načíst, vyplňte je prosím ručně')
+      // TODO until ARES ("Data z ARESu se nepodařilo načíst, vyplňte je prosím ručně")
       await fillNameAndAddress(page);
 
       await page.getByRole("tab", { name: "Příměstský tábor" }).click();
@@ -70,7 +70,7 @@ test.describe("Objednávka pro MŠ/ZŠ", async () => {
       await page.locator("#ico").fill(ICO);
       await page.keyboard.press("Enter");
       await page.locator(".toast-message").waitFor();
-      // TODO until ARES ('Data z ARESu se nepodařilo načíst, vyplňte je prosím ručně')
+      // TODO until ARES ("Data z ARESu se nepodařilo načíst, vyplňte je prosím ručně")
       await fillNameAndAddress(page);
 
       await page.locator("#substitute").fill(substituteName);

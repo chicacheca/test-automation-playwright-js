@@ -51,7 +51,7 @@ test.describe("Objednávka pro MŠ/ZŠ", async () => {
       orderPage,
     }) => {
       await orderPage.setICO(ICO);
-      // TODO until ARES ('Data z ARESu se nepodařilo načíst, vyplňte je prosím ručně')
+      // TODO until ARES ("Data z ARESu se nepodařilo načíst, vyplňte je prosím ručně")
       await orderPage.fillNameAndAddress(clientName, address);
 
       await expect(orderPage.client).toHaveValue(clientName);
@@ -62,7 +62,7 @@ test.describe("Objednávka pro MŠ/ZŠ", async () => {
       orderPage,
     }) => {
       await orderPage.setICO(ICO);
-      // TODO until ARES ('Data z ARESu se nepodařilo načíst, vyplňte je prosím ručně')
+      // TODO until ARES ("Data z ARESu se nepodařilo načíst, vyplňte je prosím ručně")
       await orderPage.fillNameAndAddress(clientName, address);
 
       await orderPage.setUrbanCamp("Odpolední", "20", "10", "2");
@@ -77,7 +77,7 @@ test.describe("Objednávka pro MŠ/ZŠ", async () => {
       orderPage,
     }) => {
       await orderPage.setICO(ICO);
-      // TODO until ARES ('Data z ARESu se nepodařilo načíst, vyplňte je prosím ručně')
+      // TODO until ARES ("Data z ARESu se nepodařilo načíst, vyplňte je prosím ručně")
       await orderPage.fillNameAndAddress(clientName, address);
 
       await orderPage.setOrder(

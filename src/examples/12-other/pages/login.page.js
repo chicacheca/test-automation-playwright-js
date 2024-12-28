@@ -1,26 +1,37 @@
+import { AppPage } from "./app.page";
+
 /**
  * Page object describing the login page
- * @type {exports.LoginPage}
  */
-export class LoginPage {
+export class LoginPage extends AppPage {
 
     constructor(page) {
-        this.page = page;
+        super(page, "/prihlaseni")
         this.emailField = this.page.getByLabel("Email");
         this.passwordField = this.page.getByLabel("Heslo");
         this.loginButton = this.page.getByRole("button", { name: "Přihlásit"});
-        this.toast = this.page.locator(".toast-message");
-        this.navbarRight = this.page.locator(".navbar-right");
-        this.usernameDropdown = this.navbarRight.locator("[data-toggle='dropdown']");
+        this.fieldError = this.page.locator(".invalid-feedback");
     }
 
     async open() {
         await this.page.goto("/prihlaseni");
     }
 
-    async login(username, password) {
+    async fillUsername(username) {
         await this.emailField.fill(username);
+    }
+
+    async fillPassword(password) {
         await this.passwordField.fill(password);
+    }
+
+    async clickLoginButton() {
         await this.loginButton.click();
+    }
+
+    async login(username, password) {
+        await this.fillUsername(username);
+        await this.fillPassword(password);
+        await this.clickLoginButton();
     }
 }

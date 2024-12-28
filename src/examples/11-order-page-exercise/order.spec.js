@@ -61,7 +61,7 @@ test.describe("Objednávka pro MŠ/ZŠ", async () => {
     }) => {
       const orderPage = new OrderPage(page);
       await orderPage.setCompanyId(ICO);
-      // TODO until ARES ('Data z ARESu se nepodařilo načíst, vyplňte je prosím ručně')
+      // TODO until ARES ("Data z ARESu se nepodařilo načíst, vyplňte je prosím ručně")
       await orderPage.toast.waitFor();
       await orderPage.setClientName(clientName);
       await orderPage.setAddress(address);
@@ -78,7 +78,7 @@ test.describe("Objednávka pro MŠ/ZŠ", async () => {
       const orderPage = new OrderPage(page);
 
       await orderPage.setCompanyId(ICO);
-      // TODO until ARES ('Data z ARESu se nepodařilo načíst, vyplňte je prosím ručně')
+      // TODO until ARES ("Data z ARESu se nepodařilo načíst, vyplňte je prosím ručně")
       await orderPage.toast.waitFor();
       //await expect(orderPage.toast).toHaveText(ORDER_SUCCESS_TOAST);
 
@@ -108,7 +108,7 @@ test.describe("Objednávka pro MŠ/ZŠ", async () => {
       const orderPage = new OrderPage(page);
 
       await orderPage.setCompanyId(ICO);
-      // TODO until ARES ('Data z ARESu se nepodařilo načíst, vyplňte je prosím ručně')
+      // TODO until ARES ("Data z ARESu se nepodařilo načíst, vyplňte je prosím ručně")
       await orderPage.toast.waitFor();
       //await expect(orderPage.toast).toHaveText(ORDER_SUCCESS_TOAST);
 

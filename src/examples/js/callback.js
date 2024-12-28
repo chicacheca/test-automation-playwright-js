@@ -3,7 +3,7 @@ const secretNumber = 42;
 function guessNumber(number, onCorrect, onMiss) {
     setTimeout(() => {
         if (number === secretNumber) {
-            onCorrect()
+            onCorrect();
         } else {
             onMiss();
         }
